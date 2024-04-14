@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asp-config-helper", "asp-config-helper\asp-config-helper.csproj", "{3017D3CE-0773-47EA-A6DD-B67A98300DC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "json-config", "json-config\json-config.csproj", "{A8FDD0B2-17C7-406A-83D8-61F93E68F0C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3017D3CE-0773-47EA-A6DD-B67A98300DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3017D3CE-0773-47EA-A6DD-B67A98300DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3017D3CE-0773-47EA-A6DD-B67A98300DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3017D3CE-0773-47EA-A6DD-B67A98300DC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8FDD0B2-17C7-406A-83D8-61F93E68F0C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8FDD0B2-17C7-406A-83D8-61F93E68F0C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8FDD0B2-17C7-406A-83D8-61F93E68F0C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8FDD0B2-17C7-406A-83D8-61F93E68F0C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47053C34-18E8-4FB7-9CF8-0A73509AAEA6}
+	EndGlobalSection
+EndGlobal
