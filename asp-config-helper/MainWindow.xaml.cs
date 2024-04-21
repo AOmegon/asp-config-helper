@@ -1,8 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using asp_config_helper.Model;
+using Microsoft.Win32;
 using System.CodeDom;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace asp_config_helper
@@ -56,10 +58,17 @@ namespace asp_config_helper
         private void ResetData()
         {
             this._cfgFullPath = string.Empty;
+            CfgTree.Items.Clear();
+            ShowJson.Text = null;
+            NodesInputs.Children.Clear();
         }
 
         private void loadJsonCfgFile()
         {
+            CfgTree.Items.Clear();
+            ShowJson.Text = null;
+            NodesInputs.Children.Clear();
+
             var manager = new json_config.LoadFile(this._cfgFullPath);
             var data = manager.GetTreeNode();
             data.Header = Path.GetFileName(this._cfgFullPath);
@@ -105,13 +114,105 @@ namespace asp_config_helper
         {
             if (_clickedTreeViewItem != null)
             {
-                // Construct the path of the clicked item
                 string itemPath = GetItemPath(_clickedTreeViewItem);
 
-                // Display the item path
                 MessageBox.Show("Item Path: " + itemPath, "Item Path", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
+        }
+
+
+        private void ContextMenu_Tree_ShowPathValue(object sender, RoutedEventArgs e)
+        {
+            if (_clickedTreeViewItem != null)
+            {
+                string itemPath = GetItemPath(_clickedTreeViewItem);
+
+                var itemPathArr = itemPath.Split("\\");
+
+                var list = itemPathArr.ToList();
+                list.RemoveAt(0);
+
+                var path = string.Join(".", list);
+
+                var manager = new json_config.LoadFile(this._cfgFullPath);
+                var data = manager.GetPathValue(path);
+
+                MessageBox.Show("Item Path: " + data, "Item Path", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+        }
+
+        private void CfgTree_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var selected = FindAncestor<TreeViewItem>((DependencyObject)e.OriginalSource);
+            this._clickedTreeViewItem = selected != null ? (TreeViewItem)selected : null;
+            NodesInputs.Children.Clear();
+
+            if (_clickedTreeViewItem != null)
+            {
+                string itemPath = GetItemPath(_clickedTreeViewItem);
+
+                var itemPathArr = itemPath.Split("\\");
+
+                var list = itemPathArr.ToList();
+                list.RemoveAt(0);
+
+                var path = string.Join(".", list);
+
+                var manager = new json_config.LoadFile(this._cfgFullPath);
+                var data = manager.GetPathValue(path);
+                ShowJson.Text = data.ToString();
+
+                var nodePathsAndValues = new List<KeyValuePair<string, object>>();
+
+                manager.ExtractNodePathsAndValues(data, string.Empty, nodePathsAndValues);
+
+                var nodeUi = nodePathsAndValues.Select( node =>
+                        new NodeUIModel
+                        {
+                            NodePath = node.Key,
+                            Value = node.Value != null ? node.Value.ToString() : string.Empty
+                        }
+                    );
+
+
+                foreach (var item in nodeUi)
+                {
+                    StackPanel itemPanel = new StackPanel
+                    {
+                        Orientation = Orientation.Vertical,
+                        Margin = new Thickness(0, 5, 0, 5),
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                    };
+
+                    Label label = new Label
+                    {
+                        Content = $"{item.Label} :",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                    };
+
+                    TextBox textBox = new TextBox
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Stretch
+                    };
+
+                    textBox.SetBinding(TextBox.TextProperty, new Binding("Input")
+                    {
+                        Source = item,
+                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                    });
+
+                    itemPanel.Children.Add(label);
+                    itemPanel.Children.Add(textBox);
+
+                    NodesInputs.Children.Add(itemPanel);
+
+                }
+
+            }
+
+            
         }
     }
 }

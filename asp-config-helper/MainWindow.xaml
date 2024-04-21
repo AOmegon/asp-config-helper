@@ -50,17 +50,54 @@
                     Click="OpenCfgFile"/>
             </MenuItem>
         </Menu>
-        <TreeView Grid.Row="1"
-                  Grid.RowSpan="10"
-                  Grid.Column="0"
-                  Grid.ColumnSpan="2"
-                  Name="CfgTree"
-                  MouseRightButtonDown="CfgTree_MouseRightButtonDown">
-                    <TreeView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Get Path" Click="ContextMenu_Tree_GetPath"/>
-                        </ContextMenu>
-                    </TreeView.ContextMenu>
+        <TreeView 
+            Grid.Row="0"
+            Grid.RowSpan="11"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Name="CfgTree"
+            MouseRightButtonDown="CfgTree_MouseRightButtonDown"
+            MouseDoubleClick="CfgTree_MouseDoubleClick"
+            Margin="10 20">
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Get Path" Click="ContextMenu_Tree_GetPath"/>
+                    <MenuItem Header="Show Value" Click="ContextMenu_Tree_ShowPathValue"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
+        <ScrollViewer
+            Grid.Row="0"
+            Grid.RowSpan="6"
+            Grid.Column="2"
+            Grid.ColumnSpan="4"
+            Margin="0 20"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            Background="red">
+            <TextBlock
+                x:Name="ShowJson"
+                TextWrapping="Wrap">
+                
+            </TextBlock>
+            
+        </ScrollViewer>
+
+        <ScrollViewer
+            Background="blue"
+            Grid.Row="0"
+            Grid.RowSpan="6"
+            Grid.Column="7"
+            Grid.ColumnSpan="4"
+            Margin="0 20"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled">
+            <StackPanel
+                x:Name="NodesInputs"
+                Orientation="Vertical"
+                Margin="10">
+                
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
